@@ -9,6 +9,7 @@ TagManager:
   - Gem
   - Enemy
   - Border
+  - Character
   layers:
   - Default
   - TransparentFX
@@ -51,4 +52,7 @@ TagManager:
     locked: 0
   - name: Terrain
     uniqueID: 651724453
+    locked: 0
+  - name: Foreground
+    uniqueID: 3486877129
     locked: 0

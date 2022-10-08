@@ -1,53 +1,74 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] GameObject character;
+    [SerializeField] Tilemap tilemap; // location
+    [SerializeField] GameObject objectToFollow; // moving object (character, car, etc.)
 
-    void FixedUpdate()
+    // Camera position bounds
+    float minCameraX;
+    float maxCameraX;
+
+    float minCameraY;
+    float maxCameraY;
+
+
+    //-----EVENT FUNCTIONS----
+    
+    private void Start()
     {
-        FollowCharacter();
+        // Get tilemap size
+        Vector3Int bottomLeftCell = tilemap.origin;
+        Vector3Int topRightCell = tilemap.origin + tilemap.size;
+
+        // Get camera size
+        Camera camera = gameObject.GetComponent<Camera>();
+
+        float cameraHeight = 2f * camera.orthographicSize;
+        float cameraWidth = cameraHeight * camera.aspect;
+
+        // Calc camera bounds
+        minCameraX = bottomLeftCell.x + cameraWidth / 2;
+        maxCameraX = topRightCell.x - cameraWidth / 2;
+
+        minCameraY = bottomLeftCell.y + cameraHeight / 2;
+        maxCameraY = topRightCell.y - cameraHeight / 2;
+
+        // Camera initial state
+        SetUpCameraPosition(minCameraX, minCameraY, transform.position.z);
     }
 
-    void FollowCharacter()
+    void LateUpdate()
     {
-        if(character != null)
+        FollowObject();
+    }
+
+
+    //-----FOLLOW OBJECT FUNCTIONS----
+
+    void FollowObject()
+    {
+        if (objectToFollow != null)
         {
-            // Direction of character movement
-            float horizontalInput = Input.GetAxis("Horizontal");
+            Vector3 objectPosition = objectToFollow.transform.position;
+            Vector3 oldCameraPosition = transform.position;
 
-            // Character position
-            float characterX = character.transform.position.x;
-            float characterY = character.transform.position.y;
+            bool isInXBounds = objectPosition.x > minCameraX && objectPosition.x < maxCameraX;
+            bool isInYBounds = objectPosition.y > minCameraY;
 
-            // Camera default state WITHOUT movement (X axis)
-            float cameraX = transform.position.x;
-            float cameraY = characterY; // ALWAYS follow character Y axis
-            float cameraZ = transform.position.z;
+            float x = isInXBounds? objectPosition.x : oldCameraPosition.x;
+            float y = isInYBounds ? objectPosition.y : oldCameraPosition.y;
+            float z = oldCameraPosition.z;
 
-            // Can camera move left or right
-            bool moveCameraLeft = false;
-            bool moveCameraRight = false;
-
-            if (horizontalInput > 0)
-            {
-                moveCameraRight = cameraX < characterX && cameraX < GLOBALS.rightCameraBound;
-            }
-            else if (horizontalInput < 0)
-            {
-                moveCameraLeft = cameraX > characterX && cameraX > GLOBALS.leftCameraBound;
-            }
-
-            // Set X for camera
-            if (moveCameraRight || moveCameraLeft)
-            {
-                cameraX = characterX;
-            }
-
-            // Move camera
-            transform.position = new Vector3(cameraX, cameraY, cameraZ);
+            SetUpCameraPosition(x, y, z);
         }
+    }
+
+    void SetUpCameraPosition(float x, float y, float z)
+    {
+        transform.position = new Vector3(x, y, z);
     }
 }

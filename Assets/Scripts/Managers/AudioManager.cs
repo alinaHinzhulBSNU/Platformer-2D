@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    [SerializeField] List<Sound> sounds; // is used to choose music inside the editor
     Dictionary<SoundType, AudioClip> soundDict; // collection of game sounds
-    [SerializeField] List<Sound> sounds;
+
+
+    //------------SINGLETON----------
 
     public static AudioManager Instance;
 
     void Awake()
     {
-        Instance = this;
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
+
+
+    //------------SETUP----------
 
     void Start()
     {
@@ -33,7 +47,7 @@ public class AudioManager : MonoBehaviour
     void PlaySound(SoundType soundType)
     {
         AudioSource audioSource = GetComponent<AudioSource>();
-        audioSource.PlayOneShot(soundDict[soundType]);
+        audioSource.PlayOneShot(soundDict[soundType], 1.0f);
     }
 
 

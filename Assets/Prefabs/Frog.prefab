@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3556350636941478365}
   - component: {fileID: 3556350636941478339}
   - component: {fileID: 3556350636941478364}
-  - component: {fileID: 3556350636941478338}
   m_Layer: 0
   m_Name: Frog
   m_TagString: Enemy
@@ -179,15 +178,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 5
---- !u!114 &3556350636941478338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3556350636941478361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f51eb44c6a078149a016e89f52aedc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
