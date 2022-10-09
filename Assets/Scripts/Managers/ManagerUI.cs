@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System;
 
 public class ManagerUI : MonoBehaviour
 {
     GameManager gameManager;
+    Animator crossfadeAnimator;
 
     // UI for different game states
     [SerializeField] GameObject startUI;
     [SerializeField] GameObject gameUI;
     [SerializeField] GameObject winUI;
     [SerializeField] GameObject endUI;
+    [SerializeField] GameObject crossfade;
 
     // UI elements with dynamic text
     [SerializeField] TextMeshProUGUI scoreText;
@@ -46,6 +49,7 @@ public class ManagerUI : MonoBehaviour
     void Start()
     {
         gameManager = GameManager.Instance;
+        crossfadeAnimator = crossfade.GetComponent<Animator>();
     }
 
 
@@ -95,7 +99,7 @@ public class ManagerUI : MonoBehaviour
         endUI.SetActive(false);
         gameUI.SetActive(true);
 
-        gameManager.RestartLevel();
+        StartCoroutine(ShowTransitionAnimation(gameManager.RestartLevel));
     }
 
     public void Win(int cherries, int gems)
@@ -113,6 +117,31 @@ public class ManagerUI : MonoBehaviour
         winUI.SetActive(false);
         gameUI.SetActive(true);
 
-        gameManager.PlayAgain();
+        StartCoroutine(ShowTransitionAnimation(gameManager.PlayAgain));
+    }
+
+
+    //------------UI ANIMATION----------
+
+    public IEnumerator ShowTransitionAnimation(Action handler)
+    {
+        // Transition animation
+        crossfadeAnimator.SetBool("isStart", true);
+        yield return new WaitForSeconds(1.5f);
+        crossfadeAnimator.SetBool("isStart", false);
+        
+        // Handler function from GameManager
+        handler();
+    }
+
+    public IEnumerator ShowTransitionAnimation(Action<int> handler, int param)
+    {
+        // Transition animation
+        crossfadeAnimator.SetBool("isStart", true);
+        yield return new WaitForSeconds(1.5f);
+        crossfadeAnimator.SetBool("isStart", false);
+
+        // Handler function from GameManager
+        handler(param);
     }
 }

@@ -82,8 +82,8 @@ public class GameManager : MonoBehaviour
             // Save level progress
             SaveLevelProgress();
 
-            // Switch level
-            switchScenesManager.LevelUp(currentLevel);
+            // Show transition animation and switch level
+            StartCoroutine(managerUI.ShowTransitionAnimation(switchScenesManager.LevelUp, currentLevel));
             currentLevel++;
 
             // Update UI
