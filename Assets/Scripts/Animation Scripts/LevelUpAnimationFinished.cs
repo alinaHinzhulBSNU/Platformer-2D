@@ -23,21 +23,8 @@ public class LevelUpAnimationFinished : StateMachineBehaviour
         // Destroy current character
         Destroy(animator.gameObject);
 
-        // Change level
-        switch (GameManager.Instance.CurrentLevel)
-        {
-            case 1:
-                SceneManager.LoadScene(Levels.LEVEL_1);
-                break;
-            case 2:
-                SceneManager.LoadScene(Levels.LEVEL_2);
-                break;
-            case 3:
-                SceneManager.LoadScene(Levels.LEVEL_3);
-                break;
-            default:
-                break;
-        }
+        // Switch level
+        GameManager.Instance.ChangeLevel();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

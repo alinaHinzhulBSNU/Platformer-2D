@@ -33,10 +33,10 @@ public class CharacterController : MonoBehaviour
                 gameManager.CollectGem(item);
                 break;
             case Tags.ENEMY:
-                gameManager.GameOver(gameObject);
+                gameManager.Die(gameObject);
                 break;
             case Tags.HOUSE:
-                gameManager.LevelUp(gameObject);
+                gameManager.GetHome(gameObject);
                 break;
             default:
                 break;

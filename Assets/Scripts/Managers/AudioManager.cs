@@ -7,6 +7,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] List<Sound> sounds; // is used to choose music inside the editor
     Dictionary<SoundType, AudioClip> soundDict; // collection of game sounds
 
+    [SerializeField] AudioSource audioSource;
+
 
     //------------SINGLETON----------
 
@@ -30,7 +32,6 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-
         InitSoundDictionary();
     }
 
@@ -46,8 +47,7 @@ public class AudioManager : MonoBehaviour
 
     void PlaySound(SoundType soundType)
     {
-        AudioSource audioSource = GetComponent<AudioSource>();
-        audioSource.PlayOneShot(soundDict[soundType], 1.0f);
+        audioSource.PlayOneShot(soundDict[soundType]);
     }
 
 

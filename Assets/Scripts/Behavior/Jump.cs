@@ -4,24 +4,28 @@ using UnityEngine;
 
 public class Jump : MonoBehaviour
 {
+    GameManager gameManager; // is used to track game status
+
     [SerializeField] LayerMask ground; // platform
     [SerializeField] float jumpForce = 20.0f; // power for jump
 
     Rigidbody2D objectRigidbody; // is used to add force
-    PolygonCollider2D objectCollider; // is used to detect ground
+    BoxCollider2D objectCollider; // is used to detect ground
 
 
     //-----EVENT FUNCTIONS----
 
     void Start()
     {
+        gameManager = GameManager.Instance;
+
         objectRigidbody = GetComponent<Rigidbody2D>();
-        objectCollider = GetComponent<PolygonCollider2D>();
+        objectCollider = GetComponent<BoxCollider2D>();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && gameManager.IsGameActive)
         {
             JumpFromTheGround();
         }
