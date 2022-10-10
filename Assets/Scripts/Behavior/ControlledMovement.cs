@@ -13,6 +13,8 @@ public class ControlledMovement : MonoBehaviour
     [SerializeField] float movementSpeed = 5.0f; // speed of movement
     [SerializeField] Tilemap tilemap; // location for movement
 
+    float horizontalInput; // user input
+
     float rightObjectBound; // right location bound
     float leftObjectBound; // left location bound
     float boundOffset = 0.5f;
@@ -36,7 +38,9 @@ public class ControlledMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (gameManager.IsGameActive) Move();
+        horizontalInput = Input.GetAxis("Horizontal");
+
+        if (gameManager.IsGameActive && horizontalInput != 0) Move();
     }
 
 
@@ -50,8 +54,6 @@ public class ControlledMovement : MonoBehaviour
 
     void Move()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-
         // Face the direction of movement
         bool turnLeft = horizontalInput < 0 && faceToRight;
         bool turnRight = horizontalInput > 0 && !faceToRight;

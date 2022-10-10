@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SwitchScenesManager : MonoBehaviour
 {
+    int levelsQuantity;
+
     //------------SINGLETON----------
 
     public static SwitchScenesManager Instance;
@@ -23,39 +25,43 @@ public class SwitchScenesManager : MonoBehaviour
     }
 
 
+    //------------SETUP----------
+
+    private void Start()
+    {
+        levelsQuantity = SceneManager.sceneCountInBuildSettings - 1;
+    }
+
+
     //------------LEVEL FUNCTIONS----------
 
     public void LevelUp(int level)
     {
-        SceneManager.UnloadSceneAsync(GetSceneNameByLevel(level));
+        SceneManager.UnloadSceneAsync(level);
         level++;
-        SceneManager.LoadScene(GetSceneNameByLevel(level), LoadSceneMode.Additive);
+        SceneManager.LoadScene(level, LoadSceneMode.Additive);
     }
 
     public void RestartGame()
     {
-        SceneManager.UnloadSceneAsync(Levels.LEVEL_3); // last level
-        SceneManager.LoadScene(Levels.LEVEL_1, LoadSceneMode.Additive); // first level
+        SceneManager.UnloadSceneAsync(levelsQuantity); // last level
+        SceneManager.LoadScene(1, LoadSceneMode.Additive); // first level scene
     }
 
     public void RestartLevel(int level)
     {
-        SceneManager.UnloadSceneAsync(GetSceneNameByLevel(level));
-        SceneManager.LoadScene(GetSceneNameByLevel(level), LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync(level);
+        SceneManager.LoadScene(level, LoadSceneMode.Additive);
     }
 
-    string GetSceneNameByLevel(int level)
+
+    //------------PROPERTIES----------
+
+    public int LevelsQuantity
     {
-        switch (level)
+        get
         {
-            case 1:
-                return Levels.LEVEL_1;
-            case 2:
-                return Levels.LEVEL_2;
-            case 3:
-                return Levels.LEVEL_3;
-            default:
-                return null;
+            return levelsQuantity;
         }
     }
 }

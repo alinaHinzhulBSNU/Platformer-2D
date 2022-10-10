@@ -4639,12 +4639,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1682468481}
     - target: {fileID: 5483534173609608966, guid: c529e681d5555424d8dbab5f4151328c, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 1193907834}
+    - target: {fileID: 5483534173609608966, guid: c529e681d5555424d8dbab5f4151328c, type: 3}
       propertyPath: objectToFollow
       value: 
       objectReference: {fileID: 1193907834}
     - target: {fileID: 5483534173609608986, guid: c529e681d5555424d8dbab5f4151328c, type: 3}
       propertyPath: m_Name
       value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 5483534173609608986, guid: c529e681d5555424d8dbab5f4151328c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c529e681d5555424d8dbab5f4151328c, type: 3}

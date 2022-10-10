@@ -6,7 +6,9 @@ using UnityEngine.Tilemaps;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] Tilemap tilemap; // location
-    [SerializeField] GameObject objectToFollow; // moving object (character, car, etc.)
+    [SerializeField] GameObject character; // character
+
+    CharacterController characterController; // controller is used to detect movement
 
     // Camera position bounds
     float minCameraX;
@@ -19,6 +21,29 @@ public class CameraController : MonoBehaviour
     //-----EVENT FUNCTIONS----
     
     private void Start()
+    {
+        // Get character controller
+        characterController = character.GetComponent<CharacterController>();
+
+        // Setup bounds
+        SetupBounds();
+
+        // Camera initial state
+        SetUpCameraPosition(minCameraX, minCameraY, transform.position.z);
+    }
+
+    void LateUpdate()
+    {
+        if (characterController.IsCharacterMoving)
+        {
+            FollowCharacter();
+        }   
+    }
+
+
+    //-----SETUP----
+
+    void SetupBounds()
     {
         // Get tilemap size
         Vector3Int bottomLeftCell = tilemap.origin;
@@ -36,39 +61,31 @@ public class CameraController : MonoBehaviour
 
         minCameraY = bottomLeftCell.y + cameraHeight / 2;
         maxCameraY = topRightCell.y - cameraHeight / 2;
-
-        // Camera initial state
-        SetUpCameraPosition(minCameraX, minCameraY, transform.position.z);
-    }
-
-    void LateUpdate()
-    {
-        FollowObject();
-    }
-
-
-    //-----FOLLOW OBJECT FUNCTIONS----
-
-    void FollowObject()
-    {
-        if (objectToFollow != null)
-        {
-            Vector3 objectPosition = objectToFollow.transform.position;
-            Vector3 oldCameraPosition = transform.position;
-
-            bool isInXBounds = objectPosition.x > minCameraX && objectPosition.x < maxCameraX;
-            bool isInYBounds = objectPosition.y > minCameraY;
-
-            float x = isInXBounds? objectPosition.x : oldCameraPosition.x;
-            float y = isInYBounds ? objectPosition.y : oldCameraPosition.y;
-            float z = oldCameraPosition.z;
-
-            SetUpCameraPosition(x, y, z);
-        }
     }
 
     void SetUpCameraPosition(float x, float y, float z)
     {
         transform.position = new Vector3(x, y, z);
+    }
+
+
+    //-----FOLLOW CHARACTER----
+
+    void FollowCharacter()
+    {
+        if (character != null)
+        {
+            Vector3 characterPosition = character.transform.position;
+            Vector3 oldCameraPosition = transform.position;
+
+            bool isInXBounds = characterPosition.x > minCameraX && characterPosition.x < maxCameraX;
+            bool isInYBounds = characterPosition.y > minCameraY;
+
+            float x = isInXBounds? characterPosition.x : oldCameraPosition.x;
+            float y = isInYBounds ? characterPosition.y : oldCameraPosition.y;
+            float z = oldCameraPosition.z;
+
+            SetUpCameraPosition(x, y, z);
+        }
     }
 }

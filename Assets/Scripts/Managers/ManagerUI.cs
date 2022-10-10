@@ -40,7 +40,7 @@ public class ManagerUI : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-        SceneManager.LoadScene(Levels.LEVEL_1, LoadSceneMode.Additive);
+        SceneManager.LoadScene(1, LoadSceneMode.Additive);
     }
 
 

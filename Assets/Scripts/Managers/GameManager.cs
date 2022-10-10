@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
 
     public void ChangeLevel()
     {
-        if (currentLevel < 3)
+        if (currentLevel < switchScenesManager.LevelsQuantity)
         {
             // Save level progress
             SaveLevelProgress();
