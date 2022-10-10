@@ -1,4 +1,4 @@
-# Sunnyland Platformer 2D
+# Sunny Land Platformer 2D
 
 Classic 2D game based on amazing free asset from Unity Asset Store (Sunnyland)
 
