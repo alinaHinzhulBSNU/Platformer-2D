@@ -968,7 +968,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Sunnyland \nPlatformer"
+  m_text: "Sunny Land \nPlatformer"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8e92b27bfdd770c4ab3be570cd919253, type: 2}
   m_sharedMaterial: {fileID: -4800086752770561092, guid: 8e92b27bfdd770c4ab3be570cd919253, type: 2}
